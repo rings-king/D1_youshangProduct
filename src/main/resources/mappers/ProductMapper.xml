@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="prod_name" property="prodName" jdbcType="VARCHAR" />
+    <result column="kind_no" property="kindNo" jdbcType="INTEGER" />
+    <result column="kind_name" property="kindName" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="prod_desc" property="prodDesc" jdbcType="VARCHAR" />
+    <result column="prod_pp" property="prodPp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, prod_id, prod_name, kind_no, kind_name, parentId, prod_desc, prod_pp
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.Product" >
+    insert into product (id, prod_id, prod_name, 
+      kind_no, kind_name, parentId, 
+      prod_desc, prod_pp)
+    values (#{id,jdbcType=INTEGER}, #{prodId,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, 
+      #{kindNo,jdbcType=INTEGER}, #{kindName,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
+      #{prodDesc,jdbcType=VARCHAR}, #{prodPp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prodId != null" >
+        prod_id,
+      </if>
+      <if test="prodName != null" >
+        prod_name,
+      </if>
+      <if test="kindNo != null" >
+        kind_no,
+      </if>
+      <if test="kindName != null" >
+        kind_name,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="prodDesc != null" >
+        prod_desc,
+      </if>
+      <if test="prodPp != null" >
+        prod_pp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null" >
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="kindNo != null" >
+        #{kindNo,jdbcType=INTEGER},
+      </if>
+      <if test="kindName != null" >
+        #{kindName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="prodDesc != null" >
+        #{prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="prodPp != null" >
+        #{prodPp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.Product" >
+    update product
+    <set >
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null" >
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="kindNo != null" >
+        kind_no = #{kindNo,jdbcType=INTEGER},
+      </if>
+      <if test="kindName != null" >
+        kind_name = #{kindName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="prodDesc != null" >
+        prod_desc = #{prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="prodPp != null" >
+        prod_pp = #{prodPp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.Product" >
+    update product
+    set prod_id = #{prodId,jdbcType=VARCHAR},
+      prod_name = #{prodName,jdbcType=VARCHAR},
+      kind_no = #{kindNo,jdbcType=INTEGER},
+      kind_name = #{kindName,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      prod_desc = #{prodDesc,jdbcType=VARCHAR},
+      prod_pp = #{prodPp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="findByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select * from product where kind_no = #{type}
+  </select>
+
+  <select id="findAllImg" resultType="java.lang.String" parameterType="java.lang.String">
+    select prod_img from prodimg where prod_id = #{prodId}
+  </select>
+
+  <select id="findDiscussSize" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(dis_cont) from discuss where pro_id = #{prodId}
+  </select>
+
+  <resultMap id="StoragePrice" type="com.lanou.model.StoragePrice">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="specification_id" property="specificationId" jdbcType="INTEGER" />
+    <result column="unit_price" property="unitPrice" jdbcType="VARCHAR" />
+    <result column="mk_price" property="mkPrice" jdbcType="VARCHAR" />
+    <result column="vip_price" property="vipPrice" jdbcType="VARCHAR" />
+    <result column="pla_price" property="plaPrice" jdbcType="VARCHAR" />
+    <result column="storage" property="storage" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="findStoragePrice" parameterType="java.lang.String" resultMap="StoragePrice">
+    select * from storageprice where prod_id = #{prodId};
+  </select>
+
+
+
+
+
+
+  <select id="selectByType" parameterType="int" resultType="list">
+   SELECT
+	prod_id
+FROM
+	product
+WHERE
+	parentId IN (
+		SELECT
+			id
+		FROM
+			product_category
+		WHERE
+			parentId IN (
+				SELECT
+					id
+				FROM
+					product_category
+				WHERE
+					parentId = #{parentId}
+			)
+	)
+
+  </select>
+
+
+  <!--模糊查询-->
+  <select id="selectByMF" resultMap="BaseResultMap" parameterType="com.lanou.model.Product">
+    select * from product where true
+    <if test="prodId != null and prodId !=''">
+      and prod_id = #{prodId}
+    </if>
+    <if test="prodName != null and prodName != ''">
+      or CONCAT(prod_name, prod_desc) LIKE CONCAT("%",#{prodId},"%")
+    </if>
+  </select>
+  <!--<select id="sortByPrice" resultMap="BaseResultMap">-->
+  <!--select * from product-->
+  <!--order by unit_price desc-->
+<!--</select>-->
+
+
+  <select id="selectAllByProd_id" resultMap="BaseResultMap" parameterType="string">
+    select * from product
+    where prod_id = #{prodId}
+  </select>
+
+
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.D1_CartMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.D1_Cart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="checked" property="checked" jdbcType="INTEGER" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cust_id, product_id, quantity, checked, creat_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from d1_cart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from d1_cart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.D1_Cart" >
+    insert into d1_cart (id, cust_id, product_id,
+      quantity, checked, creat_time,
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER},
+      #{quantity,jdbcType=INTEGER}, #{checked,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.D1_Cart" >
+    insert into d1_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="checked != null" >
+        checked,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="checked != null" >
+        #{checked,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.D1_Cart" >
+    update d1_cart
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="checked != null" >
+        checked = #{checked,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.D1_Cart" >
+    update d1_cart
+    set cust_id = #{custId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=INTEGER},
+      checked = #{checked,jdbcType=INTEGER},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selById" resultMap="BaseResultMap" parameterType="Map">
+    select * from d1_cart
+    where cust_id = #{custId}
+    AND product_id = #{productId}
+  </select>
+
+
+  <resultMap id="BaseResultMap02" type="com.lanou.model.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="prod_name" property="prodName" jdbcType="VARCHAR" />
+    <result column="kind_no" property="kindNo" jdbcType="INTEGER" />
+    <result column="kind_name" property="kindName" jdbcType="VARCHAR" />
+    <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="mk_price" property="mkPrice" jdbcType="DECIMAL" />
+    <result column="vip_price" property="vipPrice" jdbcType="DECIMAL" />
+    <result column="pla_price" property="plaPrice" jdbcType="DECIMAL" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="prod_desc" property="prodDesc" jdbcType="VARCHAR" />
+    <result column="prod_pp" property="prodPp" jdbcType="VARCHAR" />
+    <result column="prod_zheku" property="prodZheku" jdbcType="REAL" />
+  </resultMap>
+
+
+  <!--根据用户id 查询所有商品-->
+  <select id="selectProductByProdId" resultMap="BaseResultMap02"  parameterType="java.lang.Integer">
+    SELECT * FROM product
+      WHERE prod_id in (
+     SELECT product_id FROM d1_cart
+     WHERE cust_id = #{custId}
+)
+  </select>
+
+
+  <select id="selQuity" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    select quantity from d1_cart
+    where cust_id = #{custId}
+  </select>
+
+
+
+
+</mapper>

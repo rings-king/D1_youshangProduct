@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.StoragePriceMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.StoragePrice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="specification_id" property="specificationId" jdbcType="INTEGER" />
+    <result column="unit_price" property="unitPrice" jdbcType="VARCHAR" />
+    <result column="mk_price" property="mkPrice" jdbcType="VARCHAR" />
+    <result column="vip_price" property="vipPrice" jdbcType="VARCHAR" />
+    <result column="pla_price" property="plaPrice" jdbcType="VARCHAR" />
+    <result column="storage" property="storage" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, prod_id, specification_id, unit_price, mk_price, vip_price, pla_price, storage
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from storageprice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from storageprice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.StoragePrice" >
+    insert into storageprice (id, prod_id, specification_id, 
+      unit_price, mk_price, vip_price, 
+      pla_price, storage)
+    values (#{id,jdbcType=INTEGER}, #{prodId,jdbcType=VARCHAR}, #{specificationId,jdbcType=INTEGER}, 
+      #{unitPrice,jdbcType=VARCHAR}, #{mkPrice,jdbcType=VARCHAR}, #{vipPrice,jdbcType=VARCHAR}, 
+      #{plaPrice,jdbcType=VARCHAR}, #{storage,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.StoragePrice" >
+    insert into storageprice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prodId != null" >
+        prod_id,
+      </if>
+      <if test="specificationId != null" >
+        specification_id,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="mkPrice != null" >
+        mk_price,
+      </if>
+      <if test="vipPrice != null" >
+        vip_price,
+      </if>
+      <if test="plaPrice != null" >
+        pla_price,
+      </if>
+      <if test="storage != null" >
+        storage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="specificationId != null" >
+        #{specificationId,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="mkPrice != null" >
+        #{mkPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="vipPrice != null" >
+        #{vipPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="plaPrice != null" >
+        #{plaPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="storage != null" >
+        #{storage,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.StoragePrice" >
+    update storageprice
+    <set >
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="specificationId != null" >
+        specification_id = #{specificationId,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="mkPrice != null" >
+        mk_price = #{mkPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="vipPrice != null" >
+        vip_price = #{vipPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="plaPrice != null" >
+        pla_price = #{plaPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="storage != null" >
+        storage = #{storage,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.StoragePrice" >
+    update storageprice
+    set prod_id = #{prodId,jdbcType=VARCHAR},
+      specification_id = #{specificationId,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=VARCHAR},
+      mk_price = #{mkPrice,jdbcType=VARCHAR},
+      vip_price = #{vipPrice,jdbcType=VARCHAR},
+      pla_price = #{plaPrice,jdbcType=VARCHAR},
+      storage = #{storage,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selAllByProdId" parameterType="Map" resultMap="BaseResultMap">
+      SELECT * FROM storageprice
+      WHERE  specification_id = #{specificationId}
+      and prod_id = #{prodId}
+  </select>
+
+</mapper>

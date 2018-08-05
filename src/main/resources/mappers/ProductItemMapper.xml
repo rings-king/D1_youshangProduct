@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.ProductItemMapper" >
+
+  <resultMap id="sProductItem" type="ProductItem">
+    <id column="id" property="id"></id>
+    <result column="prod_id" property="prodId"></result>
+    <result column="prod_name" property="prodName"></result>
+    <result column="kind_no" property="kindNo"></result>
+    <result column="kind_name" property="kindName"></result>
+    <result column="parentId" property="parentId"></result>
+    <result column="prod_desc" property="prodDesc"></result>
+    <result column="prod_pp" property="prodPp"></result>
+    <collection property="specification" ofType="Specification">
+      <id column="sf_id" property="sfId"></id>
+      <result column="specification" property="specification"></result>
+    </collection>
+    <collection property="allImg" ofType="ProdImg">
+      <id column="img_id" property="imgId"></id>
+      <result column="prod_id" property="prodId"></result>
+      <result column="prod_img" property="prodImg"></result>
+    </collection>
+    <collection property="allDiscuss" ofType="Discuss">
+      <id column="dis_id" property="disId"></id>
+      <result column="dis_cont" property="disCont"></result>
+      <result column="dis_star" property="disStar"></result>
+      <result column="pro_id" property="proId"></result>
+    </collection>
+    <collection property="ectypes" ofType="Ectype">
+      <id column="e_id" property="eId"></id>
+      <result column="ect_id" property="ectId"></result>
+      <result column="ect_name" property="ectName"></result>
+      <result column="prod_id" property="prodId"></result>
+    </collection>
+    <collection property="storagePrices" ofType="StoragePrice">
+      <result column="prod_id" property="prodId"></result>
+      <result column="specification_id" property="specificationId"></result>
+      <result column="unit_price" property="unitPrice"></result>
+      <result column="mk_price" property="mkPrice"></result>
+      <result column="vip_price" property="vipPrice"></result>
+      <result column="pla_price" property="plaPrice"></result>
+      <result column="storage" property="storage"></result>
+    </collection>
+  </resultMap>
+    
+
+  <select id="productItem" parameterType="java.lang.String" resultMap="sProductItem">
+    select
+    *
+    from product p,prodimg pp,discuss d,storageprice sp,specification s,ectype e
+    where
+    p.prod_id = #{prodId}
+    and p.prod_id = d.pro_id
+    and pp.prod_id = p.prod_id
+    and sp.specification_id = s.sf_id
+    and p.prod_id = sp.prod_id
+    and e.prod_id = p.prod_id
+  </select>
+
+    <select id="findParentByParentdId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select parentId from product_category where id = #{parentId}
+    </select>
+
+    <select id="findNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select name from product_category where id = #{0}
+    </select>
+</mapper>

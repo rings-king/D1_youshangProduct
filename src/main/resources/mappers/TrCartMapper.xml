@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.TrCartMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.TrCart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="quantity" property="quantity" jdbcType="INTEGER" />
+    <result column="checked" property="checked" jdbcType="INTEGER" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sf_id" property="sfId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cust_id, product_id, quantity, checked, creat_time, update_time, sf_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from d1_cart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from d1_cart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.TrCart" >
+    insert into d1_cart (id, cust_id, product_id, 
+      quantity, checked, creat_time, 
+      update_time, sf_id)
+    values (#{id,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{checked,jdbcType=INTEGER}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{sfId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.TrCart" >
+    insert into d1_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="checked != null" >
+        checked,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sfId != null" >
+        sf_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="checked != null" >
+        #{checked,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfId != null" >
+        #{sfId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.TrCart" >
+    update d1_cart
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="checked != null" >
+        checked = #{checked,jdbcType=INTEGER},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfId != null" >
+        sf_id = #{sfId,jdbcType=INTEGER},
+      </if>
+    </set>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.TrCart" >
+    update d1_cart
+    set cust_id = #{custId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=INTEGER},
+      checked = #{checked,jdbcType=INTEGER},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sf_id = #{sfId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByMap" parameterType="com.lanou.model.TrCart" resultType="com.lanou.model.TrCart">
+    select * from
+    d1_cart
+    <where>
+      <if test="custId != null">
+        cust_id = #{custId}
+      </if>
+      <if test="productId != null">
+        and product_id = #{productId}
+      </if>
+      <if test="sfId != null">
+        and sf_id = #{sfId}
+      </if>
+    </where>
+  </select>
+
+
+
+
+
+  <resultMap id="showAllProduct" type="com.lanou.model.TrCart">
+    <id column="id" property="id"></id>
+    <result column="cust_id" property="custId"></result>
+    <result column="product_id" property="productId"></result>
+    <result column="quantity" property="quantity"></result>
+    <result column="checked" property="checked"></result>
+    <result column="creat_time" property="creatTime"></result>
+    <result column="update_time" property="updateTime"></result>
+    <result column="sf_id" property="sfId"></result>
+    <association property="product" javaType="com.lanou.model.Product">
+      <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+      <result column="prod_name" property="prodName" jdbcType="VARCHAR" />
+      <result column="kind_no" property="kindNo" jdbcType="INTEGER" />
+      <result column="kind_name" property="kindName" jdbcType="VARCHAR" />
+      <result column="parentId" property="parentid" jdbcType="INTEGER" />
+      <result column="prod_desc" property="prodDesc" jdbcType="VARCHAR" />
+      <result column="prod_pp" property="prodPp" jdbcType="VARCHAR" />
+      <association property="storageprice" javaType="com.lanou.model.StoragePrice">
+        <result column="prod_id" property="prodId"></result>
+        <result column="specification_id" property="specificationId"></result>
+        <result column="unit_price" property="unitPrice"></result>
+        <result column="mk_price" property="mkPrice"></result>
+        <result column="vip_price" property="vipPrice"></result>
+        <result column="pla_price" property="plaPrice"></result>
+        <result column="storage" property="storage"></result>
+      </association>
+      <association property="specification" javaType="com.lanou.model.Specification">
+        <id column="sf_id" property="sfId"></id>
+        <result column="specification" property="specification"></result>
+      </association>
+    </association>
+  </resultMap>
+
+  <!--<select id="showAllProduct" parameterType="java.lang.Integer" resultMap="showAllProduct">-->
+      <!--select * from-->
+      <!--d1_cart c,product d,storageprice sp,specification sf-->
+      <!--where c.cust_id = #{custId}-->
+      <!--and d.prod_id = c.product_id-->
+      <!--and d.prod_id = sp.prod_id-->
+      <!--and c.sf_id = sp.specification_id-->
+      <!--and sp.specification_id = sf.sf_id-->
+  <!--</select>-->
+
+  <select id="showAllTrCart" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from d1_cart c where c.cust_id = #{custId}
+  </select>
+
+  <select id="showProduct" parameterType="com.lanou.model.TrCart" resultMap="showAllProduct">
+    select * from
+    d1_cart c,product d,storageprice sp
+    <if test="sfId != null">
+      , specification sf
+    </if>
+
+    <where>
+      <if test="custId != null">
+        and c.cust_id  #{custId}
+      </if>
+      <if test="productId != null">
+       and d.prod_id = #{productId}
+      </if>
+      <if test="productId != null">
+        and d.prod_id = sp.prod_id
+      </if>
+      <if test="productId != null">
+        and c.product_id = #{productId}
+      </if>
+      <if test="sfId != null">
+        and #{sfId} = sp.specification_id
+      </if>
+      <if test="sfId != null">
+        and sp.specification_id = sf.sf_id
+      </if>
+      <if test="sfId != null">
+        and #{sfId} = c.sf_id
+      </if>
+
+    </where>
+
+  </select>
+
+  <delete id="deleteOneProduct" parameterType="com.lanou.model.TrCart">
+    delete from d1_cart
+    where cust_id = #{custId}
+    and product_id = #{productId}
+    <if test="sfId != null">
+      and sf_id = #{sfId}
+    </if>
+  </delete>
+
+  <delete id="deleteAllProduct" parameterType="java.lang.Integer">
+    delete from d1_cart
+    where cust_id = #{custId}
+  </delete>
+</mapper>

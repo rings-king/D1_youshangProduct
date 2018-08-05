@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.EctypeMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.Ectype" >
+    <id column="e_id" property="eId" jdbcType="INTEGER" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="ect_id" property="ectId" jdbcType="VARCHAR" />
+    <result column="ect_name" property="ectName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    e_id, prod_id, ect_id, ect_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ectype
+    where e_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ectype
+    where e_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.Ectype" >
+    insert into ectype (id, prod_id, ect_id, 
+      ect_name)
+    values (#{id,jdbcType=INTEGER}, #{prodId,jdbcType=VARCHAR}, #{ectId,jdbcType=VARCHAR}, 
+      #{ectName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.Ectype" >
+    insert into ectype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        e_id,
+      </if>
+      <if test="prodId != null" >
+        prod_id,
+      </if>
+      <if test="ectId != null" >
+        ect_id,
+      </if>
+      <if test="ectName != null" >
+        ect_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="ectId != null" >
+        #{ectId,jdbcType=VARCHAR},
+      </if>
+      <if test="ectName != null" >
+        #{ectName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.Ectype" >
+    update ectype
+    <set >
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="ectId != null" >
+        ect_id = #{ectId,jdbcType=VARCHAR},
+      </if>
+      <if test="ectName != null" >
+        ect_name = #{ectName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where e_id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.Ectype" >
+    update ectype
+    set prod_id = #{prodId,jdbcType=VARCHAR},
+      ect_id = #{ectId,jdbcType=VARCHAR},
+      ect_name = #{ectName,jdbcType=VARCHAR}
+    where e_id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.Customer" >
+    <id column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="regis_date" property="regisDate" jdbcType="DATE" />
+    <result column="tel_no" property="telNo" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="cust_level" property="custLevel" jdbcType="VARCHAR" />
+    <result column="cust_sco" property="custSco" jdbcType="VARCHAR" />
+    <result column="cust_paw" property="custPaw" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cust_id, cust_code, addr, regis_date, tel_no, sex, cust_name, cust_level, cust_sco,
+    cust_paw
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from customer
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.Customer" >
+    insert into customer (cust_id, cust_code, addr,
+      regis_date, tel_no, sex,
+      cust_name, cust_level, cust_sco,
+      cust_paw)
+    values (#{custId,jdbcType=INTEGER}, #{custCode,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR},
+      #{regisDate,jdbcType=DATE}, #{telNo,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+      #{custName,jdbcType=VARCHAR}, #{custLevel,jdbcType=VARCHAR}, #{custSco,jdbcType=VARCHAR},
+      #{custPaw,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="custCode != null" >
+        cust_code,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="regisDate != null" >
+        regis_date,
+      </if>
+      <if test="telNo != null" >
+        tel_no,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="custLevel != null" >
+        cust_level,
+      </if>
+      <if test="custSco != null" >
+        cust_sco,
+      </if>
+      <if test="custPaw != null" >
+        cust_paw,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="custCode != null" >
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="regisDate != null" >
+        #{regisDate,jdbcType=DATE},
+      </if>
+      <if test="telNo != null" >
+        #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custLevel != null" >
+        #{custLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="custSco != null" >
+        #{custSco,jdbcType=VARCHAR},
+      </if>
+      <if test="custPaw != null" >
+        #{custPaw,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.Customer" >
+    update customer
+    <set >
+      <if test="custCode != null" >
+        cust_code = #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="regisDate != null" >
+        regis_date = #{regisDate,jdbcType=DATE},
+      </if>
+      <if test="telNo != null" >
+        tel_no = #{telNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custLevel != null" >
+        cust_level = #{custLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="custSco != null" >
+        cust_sco = #{custSco,jdbcType=VARCHAR},
+      </if>
+      <if test="custPaw != null" >
+        cust_paw = #{custPaw,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.Customer" >
+    update customer
+    set cust_code = #{custCode,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      regis_date = #{regisDate,jdbcType=DATE},
+      tel_no = #{telNo,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      cust_level = #{custLevel,jdbcType=VARCHAR},
+      cust_sco = #{custSco,jdbcType=VARCHAR},
+      cust_paw = #{custPaw,jdbcType=VARCHAR}
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+
+  <select id="checkedTel" parameterType="string" resultType="int">
+    select count(*) from customer
+    where tel_no = #{telNo}
+  </select>
+
+  <select id="selectNoAndPaw" resultMap="BaseResultMap" >
+    select * from customer
+    <if test="telNo !=null">
+      where tel_no = #{telNo}
+    </if>
+    <if test="custPaw !=null">
+      and cust_paw = #{custPaw}
+    </if>
+    <if test="sex !=null">
+      and sex = #{sex}
+    </if>
+
+  </select>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.ProdImgMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.ProdImg" >
+    <id column="img_id" property="imgId" jdbcType="INTEGER" />
+    <result column="prod_id" property="prodId" jdbcType="VARCHAR" />
+    <result column="prod_img" property="prodImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    img_id, prod_id, prod_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from prodimg
+    where img_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from prodimg
+    where img_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.ProdImg" >
+    insert into prodimg (img_id, prod_id, prod_img
+      )
+    values (#{id,jdbcType=INTEGER}, #{prodId,jdbcType=VARCHAR}, #{prodImg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.ProdImg" >
+    insert into prodimg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        img_id,
+      </if>
+      <if test="prodId != null" >
+        prod_id,
+      </if>
+      <if test="prodImg != null" >
+        prod_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodImg != null" >
+        #{prodImg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.ProdImg" >
+    update prodimg
+    <set >
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodImg != null" >
+        prod_img = #{prodImg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where img_id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.ProdImg" >
+    update prodimg
+    set prod_id = #{prodId,jdbcType=VARCHAR},
+      prod_img = #{prodImg,jdbcType=VARCHAR}
+    where img_id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="seluelById" parameterType="java.lang.String" resultType="java.lang.String">
+     SELECT pord_img FROM prodimg
+     WHERE prod_id = #{prodId}
+  </select>
+
+
+</mapper>

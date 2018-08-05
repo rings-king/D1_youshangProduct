@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lanou.dao.SpecificationMapper" >
+  <resultMap id="BaseResultMap" type="com.lanou.model.Specification" >
+    <id column="sf_id" property="sfId" jdbcType="INTEGER" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sf_id, specification
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from specification
+    where sf_id = #{sfId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from specification
+    where sf_id = #{sfId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lanou.model.Specification" >
+    insert into specification (sf_id, specification)
+    values (#{sfId,jdbcType=INTEGER}, #{specification,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lanou.model.Specification" >
+    insert into specification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sfId != null" >
+        sf_id,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sfId != null" >
+        #{sfId,jdbcType=INTEGER},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.model.Specification" >
+    update specification
+    <set >
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sf_id = #{sfId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.model.Specification" >
+    update specification
+    set specification = #{specification,jdbcType=VARCHAR}
+    where sf_id = #{sfId,jdbcType=INTEGER}
+  </update>
+</mapper>
